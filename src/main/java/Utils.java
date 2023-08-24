@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.List;
 
 public class Utils {
 
@@ -10,6 +11,7 @@ public class Utils {
 
     static double mm_height  = Utils.height / Utils.dpi * Utils.INCH;
     static double mm_width = Utils.width / Utils.dpi * Utils.INCH;
+    private static final int DIAMETER_ATTACHMENT_POINT_PX = Utils.get_pixels_from_mm(1.0);
 
 
 
@@ -21,6 +23,14 @@ public class Utils {
     public static void drawPoint(int x, int y, Graphics2D g){
         g.setColor(Color.CYAN);
         g.fillOval(x, y , 30, 30);
+    }
+
+    public static void drawPoints(List<Point> attachmentPoints, Graphics2D g){
+        if (attachmentPoints != null ) {
+            for (Point p : attachmentPoints) {
+                g.fillOval(p.x - DIAMETER_ATTACHMENT_POINT_PX / 2, p.y - DIAMETER_ATTACHMENT_POINT_PX / 2, DIAMETER_ATTACHMENT_POINT_PX, DIAMETER_ATTACHMENT_POINT_PX);
+            }
+        }
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

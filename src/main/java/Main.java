@@ -12,6 +12,13 @@ public class Main  {
 
     public static void main(String[] args) {
 
+        String[][] data = {
+                {"Группа №", "1","2"},
+                {"Потребитель", "Освещение","sdsddfdfdfdfddfdf222"},
+                {"Iном., А", "16",""},
+                {"Фаза", "А",""}
+        };
+
         // Создаем буферизированное изображение и получаем его графику
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
@@ -45,7 +52,9 @@ public class Main  {
         // Длина линии питания в пикселях делится на 2 и вычитается из центра рамки, чтобы расположить линию по центру
         ParallelLinesFigure figure = new ParallelLinesFigure(leafFrame.centerPointX - Utils.get_pixels_from_mm(length) / 2, 300, length, 10);
 
-        Line line = new Line(290.0, 0,10.0, 0 );
+        Point point = figure.attachmentPoints.get(0);
+        Avtomat avtomat = new Avtomat(point.x, point.y, figure.getNeutral().startPointY, figure.getGround().startPointY, "QF1");
+        Table table = new Table(avtomat.line2.endPointX, avtomat.line2.endPointY + 200, data);
 
 
 
@@ -60,6 +69,8 @@ public class Main  {
 //        triangleWithLabel.draw(g2d);
         figure.draw(g2d);
         leafFrame.draw(g2d);
+        avtomat.draw(g2d);
+        table.draw(g2d);
         //line.draw(g2d);
 
 

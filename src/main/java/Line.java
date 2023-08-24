@@ -20,7 +20,7 @@ class Line {
 
     Color color = Color.BLACK;
     // Толщина линии в пикселях
-    int lineThickness = 1;
+   private int lineThickness = 1;
 
     public Line(double mmLength, int startPointX, int startPointY, double directionDegrees) {
         this.mmLength = mmLength;
@@ -28,36 +28,27 @@ class Line {
         this.startPointY = startPointY;
         this.directionDegrees = directionDegrees;
 
-        // Конвертируем миллиметры в пиксели с учетом DPI
-        int pixelLength = Utils.get_pixels_from_mm(this.mmLength);
-
-        // Рассчитываем конечные координаты на основе направления
-        double angleRadians = Math.toRadians(directionDegrees);
-        this.endPointX = (int) (startPointX + pixelLength * Math.cos(angleRadians));
-        this.endPointY = (int) (startPointY + pixelLength * Math.sin(angleRadians));
-
-        this.centerPointX = Math.abs(this.startPointX - this.endPointX) / 2;
-        this.centerPointY = Math.abs(this.startPointY - this.endPointY) / 2;
+        setEndPoints();
     }
+
+
 
     public Line(double mmLength, double startPointX_mm, double startPointY_mm, double directionDegrees) {
         this.mmLength = (Double) mmLength;
         this.directionDegrees = directionDegrees;
-
-
-
         // Конвертируем миллиметры в пиксели с учетом DPI
         this.startPointX = Utils.get_pixels_from_mm(startPointX_mm);
         // Конвертируем миллиметры в пиксели с учетом DPI
         this.startPointY = Utils.get_pixels_from_mm(startPointY_mm);
 
-        // Конвертируем миллиметры в пиксели с учетом DPI
-        int pixelLength = Utils.get_pixels_from_mm(this.mmLength);
+        setEndPoints();
+    }
 
-        // Рассчитываем конечные координаты на основе направления
-        double angleRadians = Math.toRadians(directionDegrees);
-        this.endPointX = (int) (startPointX + pixelLength * Math.cos(angleRadians));
-        this.endPointY = (int) (startPointY + pixelLength * Math.sin(angleRadians));
+    public Line(int startPointX, int startPointY, int endPointX, int endPointY) {
+        this.startPointX = startPointX;
+        this.startPointY = startPointY;
+        this.endPointX = endPointX;
+        this.endPointY = endPointY;
     }
 
     public void draw(Graphics2D g2d) {
@@ -90,5 +81,18 @@ class Line {
     public void setLineThickness(double mmLineThickness) {
         this.lineThickness = Utils.get_pixels_from_mm(mmLineThickness);
         //this.lineThickness = mmLineThickness;
+    }
+
+    private void setEndPoints(){
+        // Конвертируем миллиметры в пиксели с учетом DPI
+        int pixelLength = Utils.get_pixels_from_mm(this.mmLength);
+
+        // Рассчитываем конечные координаты на основе направления
+        double angleRadians = Math.toRadians(directionDegrees);
+        this.endPointX = (int) (startPointX + pixelLength * Math.cos(angleRadians));
+        this.endPointY = (int) (startPointY + pixelLength * Math.sin(angleRadians));
+
+        this.centerPointX = Math.abs(this.startPointX - this.endPointX) / 2;
+        this.centerPointY = Math.abs(this.startPointY - this.endPointY) / 2;
     }
 }
